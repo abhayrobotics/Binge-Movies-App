@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios';
 
 import styled from 'styled-components';
 
+import MovieComponent from './components/MovieComponent';
+import MovieInfoComponent from './components/MovieInfoComponent';
+
+export const Api_Key= "18be1790";
+
+
+
+const MovieName =styled.div`
+display:flex`;
 const Container = styled.div`
 display:flex;
 flex-direction:column;
@@ -47,21 +57,56 @@ font-size:17px;
 font-weight:500;
 border-radius:5px
 `
+
+const MovieListContainer = styled.div`
+  display:flex;
+  flex-wrap:wrap;
+  flex-direction:row;
+  padding:30px;
+  justify-content:space-evenly;
+  gap:24px
+`
+
 const App = () => {
+    const[searchQuery,updateSearchQuery] =useState();
+    const[timeoutId,updateTimeoutId] =useState();
+    const[movieList,updateMovieList] =useState();
+    const[selectedMovie,onSelectedMovie] =useState();
+
+    const fetchData =async (searchString)=>{
+      const response =await axios.get(`https://www.omdbapi.com/?s=${searchString}&apikey=${Api_Key}`);
+      console.log(response.data.Search);
+      updateMovieList(response.data.Search)
+    }
+    
+    const onTextChange = (event) =>{
+      clearTimeout(timeoutId);
+      updateSearchQuery(event.target.value);
+      const timeout =setTimeout(()=> fetchData(event.target.value),500);
+      updateTimeoutId(timeout);
+    }
   return (
    <Container>
 
     <Header >
-      <movieName >
+  
+      <MovieName >
         <MovieIcon  src="/icon.png" /> Binge Movies
-      </movieName>
+      </MovieName>
       <SearchBar>
         <SearchIcon src="/search-icon.svg" />
-        <SearchInput />
+        <SearchInput onChange={onTextChange} value={searchQuery} placeholder='Search Movies' />
       </SearchBar>
-      
+  
       </Header>
-    
+      {selectedMovie && <MovieInfoComponent selectedMovie={selectedMovie} /> }
+      <MovieListContainer>
+        {movieList?.length?
+        movieList.map((movie, index)=><MovieComponent key={index} movie={movie} onSelectedMovie ={onSelectedMovie} />)
+        : "No Movie Found"}
+        
+        
+      </MovieListContainer>  
    </Container>
     
   )
