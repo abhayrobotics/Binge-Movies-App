@@ -54,12 +54,12 @@ const MovieInfoComponent = (props) => {
     <CoverImage src={movieInfo?.Poster}
 />
     <InfoColumn>
-        <MovieName>Movie :<span>{movieInfo?.Title}</span></MovieName>
-        <OtherInfo>Release :<span>{movieInfo?.Year}</span></OtherInfo>
-        <OtherInfo>Released :<span>{movieInfo?.Released}</span></OtherInfo>
+        <MovieName>Movie : <span>{movieInfo?.Title}</span></MovieName>
+        <OtherInfo>Release : <span>{movieInfo?.Year}</span></OtherInfo>
+        <OtherInfo>Released : <span>{movieInfo?.Released}</span></OtherInfo>
         <OtherInfo>Director : <span>{movieInfo?.Director}</span></OtherInfo>
         <OtherInfo>Actors : <span>{movieInfo?.Actors}</span></OtherInfo>
-        <OtherInfo>Genre :<span>{movieInfo?.Genre}</span></OtherInfo>
+        <OtherInfo>Genre : <span>{movieInfo?.Genre}</span></OtherInfo>
         <OtherInfo>Language:<span>{movieInfo?.Language}</span></OtherInfo>
         <OtherInfo>Imdb : <span>{movieInfo?.imdbRating}</span></OtherInfo>
         {/* <OtherInfo>Plot : {movieInfo?.Plot}</OtherInfo> */}
